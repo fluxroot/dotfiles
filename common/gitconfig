@@ -1,0 +1,5 @@
+[user]
+	name = Phokham Nonava
+	email = pn@nonava.com
+[push]
+	default = upstream
