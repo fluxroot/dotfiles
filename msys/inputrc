@@ -13,5 +13,5 @@ set bell-style none
 "\e[6~": history-search-forward
 "\e[3~": delete-char
 "\e[2~": quoted-insert
-"\e[C": forward-word
-"\e[D": backward-word
+"\e\e[C": forward-word
+"\e\e[D": backward-word
