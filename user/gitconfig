@@ -1,7 +1,13 @@
 [user]
 	name = Phokham Nonava
 	email = pn@nonava.com
-[push]
-	default = upstream
 [color]
 	ui = true
+	diff = true
+	status = true
+	branch = true
+	interactive = true
+[push]
+	default = upstream
+[core]
+	autocrlf = true
