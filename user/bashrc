@@ -89,7 +89,8 @@ alias ll='ls -l'                              # long list
 alias la='ls -A'                              # all but . and ..
 alias l='ls -CF'                              #
 
-alias gitrwhistory='git filter-branch --env-filter '"'"'export GIT_AUTHOR_DATE="`date`"; export GIT_COMMITTER_DATE="`date`"'"'"
+alias gitrwdate='git filter-branch --env-filter '"'"'export GIT_AUTHOR_DATE="`date`"; export GIT_COMMITTER_DATE="`date`"'"'"
+alias gitrwauthor='git filter-branch --env-filter '"'"'export GIT_AUTHOR_NAME="Phokham Nonava"; export GIT_AUTHOR_EMAIL="pn@nonava.com"; export GIT_COMMITTER_NAME="Phokham Nonava"; export GIT_COMMITTER_EMAIL="pn@nonava.com"'"'"
 
 # Umask
 #
