@@ -1,3 +1,69 @@
+import java.security.MessageDigest
+
+defaultTasks 'diff'
+
+ext.directories = [
+    cygwin: 'C:\\cygwin',
+    msys: 'C:\\mingw\\msys\\1.0',
+    Programs: 'C:\\Programs',
+    user: System.getProperty('user.home')
+]
+
+def differ = {different, missing ->
+  MessageDigest messageDigest = MessageDigest.getInstance("SHA-1")
+
+  directories.each {key, value ->
+    File source = file(key)
+    FileTree sourceTree = fileTree(key)
+    sourceTree.each {sourceFile ->
+      File relativePath = new File(source.toURI().relativize(sourceFile.toURI()).toString())
+      File targetFile = new File(value, relativePath.toString())
+
+      if (targetFile.exists()) {
+        sourceFile.eachByte(1024 * 1024) {byte[] bytes, int bytesRead ->
+          messageDigest.update(bytes, 0, bytesRead)
+        }
+        byte[] sourceDigest = messageDigest.digest()
+
+        targetFile.eachByte(1024 * 1024) {byte[] bytes, int bytesRead ->
+          messageDigest.update(bytes, 0, bytesRead)
+        }
+        byte[] targetDigest = messageDigest.digest()
+
+        if (sourceDigest != targetDigest) {
+          different(sourceFile, targetFile)
+        }
+      } else {
+        missing(sourceFile, targetFile)
+      }
+    }
+  }
+}
+
+task diff << {
+  differ({File sourceFile, File targetFile ->
+    println "DIFFERENT: ${sourceFile} != ${targetFile}"
+  }, {File sourceFile, File targetFile ->
+    println "MISSING: ${targetFile}"
+  })
+}
+
+task install << {
+  differ({File sourceFile, File targetFile ->
+    copy {
+      from sourceFile
+      into targetFile.getParentFile()
+    }
+    println "INSTALLING: ${targetFile}"
+  }, {File sourceFile, File targetFile ->
+    copy {
+      from sourceFile
+      into targetFile.getParentFile()
+    }
+    println "INSTALLING: ${targetFile}"
+  })
+}
+
 task wrapper(type: Wrapper) {
   gradleVersion = '1.10'
 }
