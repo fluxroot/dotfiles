@@ -8,6 +8,7 @@ if [ "`uname`" \> "MINGW" ]; then
 
 	PATH=${PATH}:${SYSTEMPATH}/Programs/jdk-1.7.0-40/bin
 	PATH=${PATH}:"${SYSTEMPATH}/Program Files (x86)/Git/cmd"
+	PATH=${PATH}:"${SYSTEMPATH}/Program Files/SlikSvn/bin"
 	PATH=${PATH}:"${SYSTEMPATH}/Program Files/nodejs/":${HOME}/AppData/Roaming/npm
 	PATH=${PATH}:${GROOVY_HOME}/bin
 	PATH=${PATH}:${GRAILS_HOME}/bin
